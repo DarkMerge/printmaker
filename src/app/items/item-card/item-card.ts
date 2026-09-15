@@ -1,53 +1,30 @@
-import { Component, input, output } from '@angular/core';
-import { NgOptimizedImage } from '@angular/common';
+import { Component, computed, input, output } from '@angular/core';
+import { CurrencyPipe, NgOptimizedImage } from '@angular/common';
 import { Item } from '../../models/item.model';
 
 @Component({
   selector: 'app-item-card',
-  imports: [NgOptimizedImage],
-  template: `
-    <article class="item-card">
-      <img [ngSrc]="item().imageUrl" width="300" height="225" style="object-fit: contain" [alt]="item().name" />
-      <h3>{{ item().name }}</h3>
-      @if (item().description) {
-        <p class="description">{{ item().description }}</p>
-      }
-      <p class="stock">In stock: {{ item().count }}</p>
-      <button type="button" [disabled]="item().count <= 0" (click)="addToCart.emit(item())">
-        Add to cart
-      </button>
-    </article>
-  `,
-  styles: `
-    .item-card {
-      display: flex;
-      flex-direction: column;
-      gap: 0.5rem;
-      padding: 1rem;
-      border: 1px solid #ddd;
-      border-radius: 0.5rem;
-    }
-
-    .item-card img {
-      width: 100%;
-      height: auto;
-      aspect-ratio: 4 / 3;
-      background: #f4f4f4;
-      border-radius: 0.25rem;
-    }
-
-    .description {
-      color: #555;
-      font-size: 0.9rem;
-    }
-
-    .stock {
-      font-size: 0.85rem;
-      color: #777;
-    }
-  `,
+  imports: [NgOptimizedImage, CurrencyPipe],
+  templateUrl: './item-card.html',
+  styleUrl: './item-card.css',
 })
 export class ItemCard {
   readonly item = input.required<Item>();
+  readonly quantityInCart = input(0);
   readonly addToCart = output<Item>();
+
+  protected readonly soldOut = computed(() => this.item().count <= 0);
+  protected readonly maxedOut = computed(() => this.quantityInCart() >= this.item().count);
+  protected readonly disabled = computed(() => this.soldOut() || this.maxedOut());
+
+  protected readonly buttonLabel = computed(() => {
+    if (this.soldOut()) return 'Sold out';
+    if (this.maxedOut()) return 'Max in cart';
+    if (this.quantityInCart() > 0) return `Add another · ${this.quantityInCart()}`;
+    return 'Add to cart';
+  });
+
+  protected readonly stockLabel = computed(() =>
+    this.soldOut() ? 'Sold out' : `In stock: ${this.item().count}`,
+  );
 }

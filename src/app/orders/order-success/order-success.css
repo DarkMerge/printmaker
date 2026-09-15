@@ -1,0 +1,112 @@
+.scrim {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background: rgba(26, 27, 46, 0.58);
+  backdrop-filter: blur(8px);
+  animation: pm-scrim-in 0.3s ease both;
+}
+
+.scrim.dismissing {
+  animation: pm-scrim-out 0.4s ease both;
+}
+
+.card {
+  position: relative;
+  width: min(420px, 100%);
+  background: var(--pm-bg);
+  border-radius: 22px;
+  padding: 40px 36px 30px;
+  text-align: center;
+  overflow: hidden;
+  box-shadow: 0 30px 80px rgba(26, 27, 46, 0.35);
+  animation: pm-card-in 0.62s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.card.dismissing {
+  animation: pm-card-out 0.4s ease both;
+}
+
+.icon {
+  position: relative;
+  width: 92px;
+  height: 92px;
+  margin: 0 auto 22px;
+}
+
+.halo {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: var(--pm-accent);
+  animation: pm-halo 1.4s ease-out 0.25s both;
+}
+
+.ring-svg {
+  position: relative;
+  width: 92px;
+  height: 92px;
+  display: block;
+}
+
+.ring {
+  animation: pm-ring 0.75s cubic-bezier(0.65, 0, 0.35, 1) 0.1s both;
+}
+
+.check {
+  animation: pm-check 0.45s cubic-bezier(0.65, 0, 0.35, 1) 0.62s both;
+}
+
+h2 {
+  margin: 0;
+  font-family: var(--pm-font-display);
+  font-size: 27px;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  animation: pm-rise 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.5s both;
+}
+
+p {
+  margin: 10px 0 0;
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--pm-indigo);
+  animation: pm-rise 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.62s both;
+}
+
+.order-pill {
+  margin: 22px auto 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 16px;
+  border-radius: 999px;
+  background: var(--pm-peach);
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  animation: pm-rise 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.74s both;
+}
+
+.dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--pm-violet);
+}
+
+.sweep {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 3px;
+  background: var(--pm-ink);
+  transform-origin: left center;
+  animation-name: pm-sweep;
+  animation-timing-function: linear;
+  animation-fill-mode: both;
+}

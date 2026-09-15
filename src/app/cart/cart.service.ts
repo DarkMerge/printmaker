@@ -11,11 +11,29 @@ export class CartService {
     this.lines().reduce((sum, line) => sum + line.quantity, 0),
   );
 
+  readonly subtotal = computed(() =>
+    this.lines().reduce((sum, line) => sum + line.item.price * line.quantity, 0),
+  );
+
+  readonly shipping = computed(() => {
+    const subtotal = this.subtotal();
+    return subtotal === 0 || subtotal >= 50 ? 0 : 4.5;
+  });
+
+  readonly total = computed(() => this.subtotal() + this.shipping());
+
+  quantityFor(itemId: string): number {
+    return this.lines().find((line) => line.item.id === itemId)?.quantity ?? 0;
+  }
+
   add(item: Item) {
     this.linesSignal.update((lines) => {
       const existing = lines.find((line) => line.item.id === item.id);
       if (!existing) {
-        return [...lines, { item, quantity: 1 }];
+        return item.count > 0 ? [...lines, { item, quantity: 1 }] : lines;
+      }
+      if (existing.quantity >= item.count) {
+        return lines;
       }
       return lines.map((line) =>
         line.item.id === item.id ? { ...line, quantity: line.quantity + 1 } : line,

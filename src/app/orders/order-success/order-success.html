@@ -1,0 +1,38 @@
+@if (visible()) {
+  <div class="scrim" [class.dismissing]="dismissing()">
+    <div class="card" [class.dismissing]="dismissing()">
+      <div class="icon">
+        <div class="halo"></div>
+        <svg viewBox="0 0 92 92" class="ring-svg">
+          <circle cx="46" cy="46" r="36" fill="none" stroke="rgba(26,27,46,0.12)" stroke-width="3" />
+          <circle
+            cx="46"
+            cy="46"
+            r="36"
+            fill="none"
+            stroke="var(--pm-accent)"
+            stroke-width="3"
+            stroke-linecap="round"
+            stroke-dasharray="226"
+            class="ring"
+            transform="rotate(-90 46 46)"
+          />
+          <path
+            d="M31 47.5 L42 58 L62 36"
+            fill="none"
+            stroke="var(--pm-ink)"
+            stroke-width="4"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-dasharray="46"
+            class="check"
+          />
+        </svg>
+      </div>
+      <h2>Order placed</h2>
+      <p>{{ summary() }}<br />We emailed the receipt and print schedule.</p>
+      <div class="order-pill"><span class="dot"></span>{{ orderNumber() }}</div>
+      <div class="sweep" [style.animation-duration.s]="sweepSeconds()"></div>
+    </div>
+  </div>
+}

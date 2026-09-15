@@ -1,1 +1,61 @@
-/* You can add global styles to this file, and also import other style files */
+:root {
+  --pm-bg: #fbf1ec;
+  --pm-ink: #1a1b2e;
+  --pm-accent: #f08a8a;
+  --pm-peach: #ffd6c9;
+  --pm-indigo: #42426f;
+  --pm-violet: #6d5ba6;
+  --pm-font-display: 'Syne', sans-serif;
+  --pm-font-body: 'DM Sans', system-ui, sans-serif;
+}
+
+body {
+  margin: 0;
+  background: var(--pm-bg);
+  color: var(--pm-ink);
+  font-family: var(--pm-font-body);
+  -webkit-font-smoothing: antialiased;
+}
+
+@keyframes pm-scrim-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes pm-scrim-out {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+@keyframes pm-card-in {
+  0% { opacity: 0; transform: translateY(26px) scale(0.94); }
+  100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+@keyframes pm-card-out {
+  0% { opacity: 1; transform: translateY(0) scale(1); }
+  100% { opacity: 0; transform: translateY(-10px) scale(0.97); }
+}
+@keyframes pm-ring {
+  from { stroke-dashoffset: 226; }
+  to { stroke-dashoffset: 0; }
+}
+@keyframes pm-check {
+  from { stroke-dashoffset: 46; }
+  to { stroke-dashoffset: 0; }
+}
+@keyframes pm-halo {
+  0% { transform: scale(0.6); opacity: 0.55; }
+  70% { opacity: 0; }
+  100% { transform: scale(1.5); opacity: 0; }
+}
+@keyframes pm-rise {
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes pm-sweep {
+  from { transform: scaleX(1); }
+  to { transform: scaleX(0); }
+}
+@keyframes pm-pop {
+  0% { transform: scale(1); }
+  40% { transform: scale(1.22); }
+  100% { transform: scale(1); }
+}

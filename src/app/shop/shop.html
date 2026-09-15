@@ -1,11 +1,22 @@
 <div class="shop-layout">
-  <section class="item-grid" aria-label="Items for sale">
-    @for (item of items.items(); track item.id) {
-      <app-item-card [item]="item" (addToCart)="cart.add($event)" />
-    } @empty {
-      <p>No items yet.</p>
-    }
-  </section>
+  <main class="catalogue">
+    <div class="catalogue-header">
+      <h1>Catalogue</h1>
+      <span class="catalogue-meta">{{ items.items().length }} parts · printed on demand in PLA</span>
+    </div>
 
-  <app-cart-panel />
+    <div class="item-grid">
+      @for (item of items.items(); track item.id) {
+        <app-item-card
+          [item]="item"
+          [quantityInCart]="cart.quantityFor(item.id)"
+          (addToCart)="cart.add($event)"
+        />
+      } @empty {
+        <p>No items yet.</p>
+      }
+    </div>
+  </main>
+
+  <app-cart-panel class="cart-aside" />
 </div>
