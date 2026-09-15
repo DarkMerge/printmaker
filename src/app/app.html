@@ -3,7 +3,7 @@
     <div class="brand">
       <span class="brand-name">printmaker</span>
     </div>
-    <div class="cart-anchor">
+    <div class="cart-anchor" #cartAnchor>
       <button type="button" class="cart-pill" (click)="toggleCart()" [attr.aria-expanded]="cartOpen()">
         <span class="cart-count" [style.animation]="cart.totalQuantity() > 0 ? 'pm-pop .35s ease' : 'none'">
           {{ cart.totalQuantity() }}
@@ -27,3 +27,10 @@
 <main>
   <router-outlet />
 </main>
+
+<app-order-success
+  [visible]="checkoutSuccess.state() !== null"
+  [orderNumber]="checkoutSuccess.state()?.orderNumber ?? ''"
+  [summary]="checkoutSuccess.state()?.summary ?? ''"
+  (dismissed)="onCheckoutSuccessDismissed()"
+/>

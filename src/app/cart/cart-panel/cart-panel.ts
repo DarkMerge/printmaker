@@ -2,22 +2,20 @@ import { Component, computed, inject, signal } from '@angular/core';
 import { CurrencyPipe, NgOptimizedImage } from '@angular/common';
 import { CartService } from '../cart.service';
 import { OrdersService } from '../../orders/orders.service';
-import { OrderSuccess } from '../../orders/order-success/order-success';
+import { CheckoutSuccessService } from '../../orders/checkout-success.service';
 
 @Component({
   selector: 'app-cart-panel',
-  imports: [CurrencyPipe, NgOptimizedImage, OrderSuccess],
+  imports: [CurrencyPipe, NgOptimizedImage],
   templateUrl: './cart-panel.html',
   styleUrl: './cart-panel.css',
 })
 export class CartPanel {
   protected readonly cart = inject(CartService);
   private readonly orders = inject(OrdersService);
+  private readonly checkoutSuccess = inject(CheckoutSuccessService);
 
   protected readonly submitting = signal(false);
-  protected readonly successVisible = signal(false);
-  protected readonly successOrderNumber = signal('');
-  protected readonly successSummary = signal('');
 
   protected readonly countLabel = computed(() => {
     const count = this.cart.totalQuantity();
@@ -42,16 +40,13 @@ export class CartPanel {
       });
 
       this.cart.clear();
-      this.successOrderNumber.set(`PM-${Math.floor(1000 + Math.random() * 8999)}`);
-      this.successSummary.set(`${count} ${partsWord(count)} у черзі на друк · ${formatMoney(total)}`);
-      this.successVisible.set(true);
+      this.checkoutSuccess.show({
+        orderNumber: `PM-${Math.floor(1000 + Math.random() * 8999)}`,
+        summary: `${count} ${partsWord(count)} у черзі на друк · ${formatMoney(total)}`,
+      });
     } finally {
       this.submitting.set(false);
     }
-  }
-
-  protected onSuccessDismissed() {
-    this.successVisible.set(false);
   }
 }
 
