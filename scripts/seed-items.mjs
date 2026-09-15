@@ -21,21 +21,19 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-// Placeholder prices from the "Printmaker cart and success design" mockup
-// (items 7-9 weren't in the mockup's 8-item sample, so these three continue
-// its price range) — replace with real prices via the admin UI.
+// Placeholder price — replace with real prices via the admin UI.
 const PLACEHOLDER_PRICES = {
-  1: 12,
-  2: 18,
-  3: 24,
-  4: 9.5,
-  5: 15,
-  6: 22,
-  7: 19,
-  8: 11,
-  9: 16,
-  10: 14,
-  11: 28,
+  1: 1,
+  2: 1,
+  3: 1,
+  4: 1,
+  5: 1,
+  6: 1,
+  7: 1,
+  8: 1,
+  9: 1,
+  10: 1,
+  11: 1,
 };
 
 const items = Array.from({ length: 11 }, (_, i) => {
