@@ -1,0 +1,38 @@
+<section class="cart-panel" aria-labelledby="cart-heading">
+  <h2 id="cart-heading">Cart</h2>
+
+  @if (orderPlaced()) {
+    <p class="success" role="status">Order placed! We'll be in touch.</p>
+  } @else if (cart.lines().length === 0) {
+    <p>Your cart is empty.</p>
+  } @else {
+    <ul class="cart-lines">
+      @for (line of cart.lines(); track line.item.id) {
+        <li class="cart-line">
+          <img [ngSrc]="line.item.imageUrl" width="60" height="45" style="object-fit: contain" [alt]="line.item.name" />
+          <span class="name">{{ line.item.name }}</span>
+          <div class="quantity-controls">
+            <button type="button" (click)="cart.decrement(line.item.id)" [attr.aria-label]="'Decrease ' + line.item.name">-</button>
+            <span>{{ line.quantity }}</span>
+            <button type="button" (click)="cart.add(line.item)" [attr.aria-label]="'Increase ' + line.item.name">+</button>
+          </div>
+          <button type="button" class="remove" (click)="cart.remove(line.item.id)" [attr.aria-label]="'Remove ' + line.item.name">
+            Remove
+          </button>
+        </li>
+      }
+    </ul>
+
+    <form class="checkout-form" (submit)="$event.preventDefault(); placeOrder()">
+      <label for="customerName">Your name</label>
+      <input id="customerName" type="text" [formField]="checkoutForm.customerName" />
+      @if (checkoutForm.customerName().touched() && checkoutForm.customerName().invalid()) {
+        <p class="error" role="alert">Name is required</p>
+      }
+
+      <button type="submit" [disabled]="submitting()">
+        {{ submitting() ? 'Placing order…' : 'Place order' }}
+      </button>
+    </form>
+  }
+</section>

@@ -1,0 +1,11 @@
+<div class="shop-layout">
+  <section class="item-grid" aria-label="Items for sale">
+    @for (item of items.items(); track item.id) {
+      <app-item-card [item]="item" (addToCart)="cart.add($event)" />
+    } @empty {
+      <p>No items yet.</p>
+    }
+  </section>
+
+  <app-cart-panel />
+</div>

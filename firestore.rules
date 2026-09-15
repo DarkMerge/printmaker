@@ -1,0 +1,21 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // NOTE: no admin auth exists yet, so item writes are open for now to let the
+    // admin UI work during development. Lock this down to an authenticated admin
+    // check before the shop goes live.
+    match /items/{itemId} {
+      allow read: if true;
+      allow write: if true;
+    }
+
+    // Anyone can place an order; only reachable by direct document ID after
+    // creation (no admin read UI yet either). Orders can't be edited or deleted
+    // by clients.
+    match /orders/{orderId} {
+      allow create: if true;
+      allow read, update, delete: if false;
+    }
+  }
+}
