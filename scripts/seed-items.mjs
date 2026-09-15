@@ -23,17 +23,17 @@ const db = getFirestore(app);
 
 // Placeholder price — replace with real prices via the admin UI.
 const PLACEHOLDER_PRICES = {
-  1: 1,
-  2: 1,
-  3: 1,
-  4: 1,
-  5: 1,
-  6: 1,
-  7: 1,
-  8: 1,
-  9: 1,
-  10: 1,
-  11: 1,
+  1: 0.01,
+  2: 0.01,
+  3: 0.01,
+  4: 0.01,
+  5: 0.01,
+  6: 0.01,
+  7: 0.01,
+  8: 0.01,
+  9: 0.01,
+  10: 0.01,
+  11: 0.01,
 };
 
 const items = Array.from({ length: 11 }, (_, i) => {
