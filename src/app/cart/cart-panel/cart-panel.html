@@ -1,34 +1,33 @@
 <div class="cart-card">
   <div class="cart-header">
-    <h2>Cart</h2>
+    <h2>Кошик</h2>
     <span class="count-label">{{ countLabel() }}</span>
   </div>
 
   @if (cart.lines().length === 0) {
-    <div class="empty-message">Your cart is empty.<br />Pick a part to start an order.</div>
-    <button type="button" class="place-order" disabled>Place order</button>
+    <div class="empty-message">Кошик порожній.<br />Оберіть деталь, щоб почати замовлення.</div>
+    <button type="button" class="place-order" disabled>Оформити замовлення</button>
   } @else {
     <div class="lines">
       @for (line of cart.lines(); track line.item.id) {
         <div class="line">
           <div class="line-info">
             <div class="line-name">{{ line.item.name }}</div>
-            <div class="line-unit">{{ line.item.price | currency }} each</div>
+            <div class="line-unit">{{ line.item.price | currency }} за од.</div>
           </div>
           <div class="quantity-controls">
             <button
               type="button"
               (click)="cart.decrement(line.item.id)"
-              [attr.aria-label]="'Decrease ' + line.item.name"
+              [attr.aria-label]="'Зменшити: ' + line.item.name"
             >
               −
             </button>
             <span class="quantity">{{ line.quantity }}</span>
             <button
               type="button"
-              [disabled]="line.quantity >= line.item.count"
               (click)="cart.add(line.item)"
-              [attr.aria-label]="'Increase ' + line.item.name"
+              [attr.aria-label]="'Збільшити: ' + line.item.name"
             >
               +
             </button>
@@ -42,31 +41,31 @@
 
     <div class="totals">
       <div class="totals-row">
-        <span>Subtotal</span><span>{{ cart.subtotal() | currency }}</span>
+        <span>Сума</span><span>{{ cart.subtotal() | currency }}</span>
       </div>
       <div class="totals-row">
-        <span>Shipping</span>
-        <span>{{ cart.shipping() === 0 ? (cart.subtotal() >= 50 ? 'Free' : '—') : (cart.shipping() | currency) }}</span>
+        <span>Доставка</span>
+        <span>{{ cart.shipping() === 0 ? (cart.subtotal() >= 50 ? 'Безкоштовно' : '—') : (cart.shipping() | currency) }}</span>
       </div>
       <div class="totals-row grand-total">
-        <span>Total</span><span>{{ cart.total() | currency }}</span>
+        <span>Разом</span><span>{{ cart.total() | currency }}</span>
       </div>
     </div>
 
     <form class="checkout-form" (submit)="$event.preventDefault(); placeOrder()">
-      <label for="customerName">Your name</label>
+      <label for="customerName">Ваше ім'я</label>
       <input id="customerName" type="text" [formField]="checkoutForm.customerName" />
       @if (checkoutForm.customerName().touched() && checkoutForm.customerName().invalid()) {
-        <p class="error" role="alert">Name is required</p>
+        <p class="error" role="alert">Вкажіть ім'я</p>
       }
 
       <button type="submit" class="place-order" [disabled]="submitting()">
-        {{ submitting() ? 'Placing order…' : 'Place order' }}
+        {{ submitting() ? 'Оформлення…' : 'Оформити замовлення' }}
       </button>
     </form>
   }
 
-  <div class="footnote">Prints start within 24h. Pickup or tracked post.</div>
+  <div class="footnote">Друк розпочнеться протягом 24 год. Самовивіз або доставка з відстеженням.</div>
 </div>
 
 <app-order-success

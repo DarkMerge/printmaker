@@ -22,21 +22,14 @@ export class CartService {
 
   readonly total = computed(() => this.subtotal() + this.shipping());
 
-  quantityFor(itemId: string): number {
-    return this.lines().find((line) => line.item.id === itemId)?.quantity ?? 0;
-  }
-
-  add(item: Item) {
+  add(item: Item, quantity = 1) {
     this.linesSignal.update((lines) => {
       const existing = lines.find((line) => line.item.id === item.id);
       if (!existing) {
-        return item.count > 0 ? [...lines, { item, quantity: 1 }] : lines;
-      }
-      if (existing.quantity >= item.count) {
-        return lines;
+        return [...lines, { item, quantity }];
       }
       return lines.map((line) =>
-        line.item.id === item.id ? { ...line, quantity: line.quantity + 1 } : line,
+        line.item.id === item.id ? { ...line, quantity: line.quantity + quantity } : line,
       );
     });
   }

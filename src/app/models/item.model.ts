@@ -3,7 +3,6 @@ export interface Item {
   name: string;
   description: string;
   imageUrl: string;
-  count: number;
   price: number;
 }
 

@@ -38,9 +38,6 @@ const PLACEHOLDER_PRICES = {
   11: 28,
 };
 
-// Placeholder stock, likewise from the mockup (items 7-9 filled in).
-const PLACEHOLDER_STOCK = { 1: 6, 2: 3, 3: 2, 4: 12, 5: 0, 6: 4, 7: 5, 8: 8, 9: 3, 10: 7, 11: 1 };
-
 const items = Array.from({ length: 11 }, (_, i) => {
   const n = i + 1;
   return {
@@ -48,7 +45,6 @@ const items = Array.from({ length: 11 }, (_, i) => {
     name: `Item ${n}`,
     description: '',
     imageUrl: `items/item-${n}.jpg`,
-    count: PLACEHOLDER_STOCK[n],
     price: PLACEHOLDER_PRICES[n],
   };
 });

@@ -2,13 +2,12 @@
   <div class="header-inner">
     <div class="brand">
       <span class="brand-name">printmaker</span>
-      <span class="brand-tagline">made to order</span>
     </div>
     <div class="cart-pill">
       <span class="cart-count" [style.animation]="cart.totalQuantity() > 0 ? 'pm-pop .35s ease' : 'none'">
         {{ cart.totalQuantity() }}
       </span>
-      <span class="cart-label">in cart</span>
+      <span class="cart-label">в кошику</span>
       <span class="cart-divider"></span>
       <span class="cart-total">{{ cart.total() | currency }}</span>
     </div>

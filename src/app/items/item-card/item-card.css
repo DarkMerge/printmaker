@@ -42,10 +42,35 @@
   font-weight: 700;
 }
 
-.stock {
-  padding: 0 4px;
-  font-size: 12px;
-  color: var(--pm-indigo);
+.quantity-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 2px 4px;
+}
+
+.quantity-controls button {
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  border: 1px solid rgb(from var(--pm-ink) r g b / 0.16);
+  background: transparent;
+  color: var(--pm-ink);
+  font-size: 15px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.quantity-controls button:hover {
+  background: rgb(from var(--pm-ink) r g b / 0.08);
+}
+
+.quantity {
+  min-width: 18px;
+  text-align: center;
+  font-size: 14px;
+  font-weight: 700;
 }
 
 .add-button {
@@ -62,11 +87,6 @@
   transition: background 0.2s ease;
 }
 
-.add-button:hover:not(:disabled) {
+.add-button:hover {
   background: var(--pm-indigo);
-}
-
-.add-button:disabled {
-  opacity: 0.42;
-  cursor: default;
 }

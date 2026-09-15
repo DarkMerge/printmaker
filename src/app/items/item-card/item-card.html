@@ -6,8 +6,10 @@
     <h2>{{ item().name }}</h2>
     <span class="price">{{ item().price | currency }}</span>
   </div>
-  <div class="stock">{{ stockLabel() }}</div>
-  <button type="button" class="add-button" [disabled]="disabled()" (click)="addToCart.emit(item())">
-    {{ buttonLabel() }}
-  </button>
+  <div class="quantity-controls">
+    <button type="button" (click)="decrement()" [attr.aria-label]="'Зменшити кількість: ' + item().name">−</button>
+    <span class="quantity">{{ quantity() }}</span>
+    <button type="button" (click)="increment()" [attr.aria-label]="'Збільшити кількість: ' + item().name">+</button>
+  </div>
+  <button type="button" class="add-button" (click)="onAddToCart()">Додати в кошик</button>
 </article>

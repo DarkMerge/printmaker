@@ -3,7 +3,6 @@ import { CurrencyPipe } from '@angular/common';
 import { FormField, form, required, submit } from '@angular/forms/signals';
 import { CartService } from '../cart.service';
 import { OrdersService } from '../../orders/orders.service';
-import { ItemsService } from '../../items/items.service';
 import { OrderSuccess } from '../../orders/order-success/order-success';
 
 @Component({
@@ -15,11 +14,10 @@ import { OrderSuccess } from '../../orders/order-success/order-success';
 export class CartPanel {
   protected readonly cart = inject(CartService);
   private readonly orders = inject(OrdersService);
-  private readonly items = inject(ItemsService);
 
   private readonly checkoutModel = signal({ customerName: '' });
   protected readonly checkoutForm = form(this.checkoutModel, (path) => {
-    required(path.customerName, { message: 'Name is required' });
+    required(path.customerName, { message: "Вкажіть ім'я" });
   });
 
   protected readonly submitting = signal(false);
@@ -29,8 +27,7 @@ export class CartPanel {
 
   protected readonly countLabel = computed(() => {
     const count = this.cart.totalQuantity();
-    if (count === 0) return 'empty';
-    return count === 1 ? '1 part' : `${count} parts`;
+    return count === 0 ? 'порожньо' : `${count} ${partsWord(count)}`;
   });
 
   protected async placeOrder() {
@@ -51,9 +48,6 @@ export class CartPanel {
             quantity: line.quantity,
           })),
         });
-        await this.items.decrementCounts(
-          lines.map((line) => ({ itemId: line.item.id, quantity: line.quantity })),
-        );
         return undefined;
       });
 
@@ -62,9 +56,7 @@ export class CartPanel {
         this.checkoutModel.set({ customerName: '' });
         this.successOrderNumber.set(`PM-${Math.floor(1000 + Math.random() * 8999)}`);
         this.successSummary.set(
-          count === 1
-            ? `1 part queued for printing · ${formatMoney(total)}`
-            : `${count} parts queued for printing · ${formatMoney(total)}`,
+          `${count} ${partsWord(count)} у черзі на друк · ${formatMoney(total)}`,
         );
         this.successVisible.set(true);
       }
@@ -76,6 +68,14 @@ export class CartPanel {
   protected onSuccessDismissed() {
     this.successVisible.set(false);
   }
+}
+
+function partsWord(count: number): string {
+  const mod10 = count % 10;
+  const mod100 = count % 100;
+  if (mod10 === 1 && mod100 !== 11) return 'деталь';
+  if (mod10 >= 2 && mod10 <= 4 && (mod100 < 12 || mod100 > 14)) return 'деталі';
+  return 'деталей';
 }
 
 function formatMoney(value: number): string {

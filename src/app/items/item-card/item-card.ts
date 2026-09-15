@@ -1,6 +1,11 @@
-import { Component, computed, input, output } from '@angular/core';
+import { Component, input, output, signal } from '@angular/core';
 import { CurrencyPipe, NgOptimizedImage } from '@angular/common';
 import { Item } from '../../models/item.model';
+
+export interface AddToCartEvent {
+  item: Item;
+  quantity: number;
+}
 
 @Component({
   selector: 'app-item-card',
@@ -10,21 +15,19 @@ import { Item } from '../../models/item.model';
 })
 export class ItemCard {
   readonly item = input.required<Item>();
-  readonly quantityInCart = input(0);
-  readonly addToCart = output<Item>();
+  readonly addToCart = output<AddToCartEvent>();
 
-  protected readonly soldOut = computed(() => this.item().count <= 0);
-  protected readonly maxedOut = computed(() => this.quantityInCart() >= this.item().count);
-  protected readonly disabled = computed(() => this.soldOut() || this.maxedOut());
+  protected readonly quantity = signal(1);
 
-  protected readonly buttonLabel = computed(() => {
-    if (this.soldOut()) return 'Sold out';
-    if (this.maxedOut()) return 'Max in cart';
-    if (this.quantityInCart() > 0) return `Add another · ${this.quantityInCart()}`;
-    return 'Add to cart';
-  });
+  protected decrement() {
+    this.quantity.update((qty) => Math.max(1, qty - 1));
+  }
 
-  protected readonly stockLabel = computed(() =>
-    this.soldOut() ? 'Sold out' : `In stock: ${this.item().count}`,
-  );
+  protected increment() {
+    this.quantity.update((qty) => qty + 1);
+  }
+
+  protected onAddToCart() {
+    this.addToCart.emit({ item: this.item(), quantity: this.quantity() });
+  }
 }

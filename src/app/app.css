@@ -31,13 +31,6 @@
   letter-spacing: -0.035em;
 }
 
-.brand-tagline {
-  font-size: 11px;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: var(--pm-indigo);
-}
-
 .cart-pill {
   display: flex;
   align-items: center;

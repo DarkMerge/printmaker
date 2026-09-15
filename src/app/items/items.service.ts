@@ -1,14 +1,5 @@
 import { DestroyRef, inject, Service, signal } from '@angular/core';
-import {
-  addDoc,
-  collection,
-  deleteDoc,
-  doc,
-  increment,
-  onSnapshot,
-  updateDoc,
-  writeBatch,
-} from 'firebase/firestore';
+import { addDoc, collection, deleteDoc, doc, onSnapshot, updateDoc } from 'firebase/firestore';
 import { FIRESTORE } from '../core/firestore';
 import { Item, NewItem } from '../models/item.model';
 
@@ -40,15 +31,5 @@ export class ItemsService {
 
   removeItem(id: string) {
     return deleteDoc(doc(this.firestore, ITEMS_COLLECTION, id));
-  }
-
-  decrementCounts(lines: readonly { itemId: string; quantity: number }[]) {
-    const batch = writeBatch(this.firestore);
-    for (const line of lines) {
-      batch.update(doc(this.firestore, ITEMS_COLLECTION, line.itemId), {
-        count: increment(-line.quantity),
-      });
-    }
-    return batch.commit();
   }
 }
