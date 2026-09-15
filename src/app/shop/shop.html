@@ -1,9 +1,5 @@
 <div class="shop-layout">
   <main class="catalogue">
-    <div class="catalogue-header">
-      <h1>Каталог</h1>
-    </div>
-
     <div class="item-grid">
       @for (item of items.items(); track item.id) {
         <app-item-card [item]="item" (addToCart)="cart.add($event.item, $event.quantity)" />

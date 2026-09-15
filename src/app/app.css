@@ -31,6 +31,10 @@
   letter-spacing: -0.035em;
 }
 
+.cart-anchor {
+  position: relative;
+}
+
 .cart-pill {
   display: flex;
   align-items: center;
@@ -39,6 +43,21 @@
   border: 1px solid rgb(from var(--pm-ink) r g b / 0.12);
   border-radius: 999px;
   background: #fff;
+  color: inherit;
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.cart-pill:hover {
+  background: color-mix(in srgb, #fff 90%, var(--pm-ink));
+}
+
+.cart-popover {
+  position: absolute;
+  top: calc(100% + 10px);
+  right: 0;
+  width: min(360px, 90vw);
+  z-index: 30;
 }
 
 .cart-count {

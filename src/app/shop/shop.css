@@ -13,18 +13,6 @@
   min-width: 0;
 }
 
-.catalogue-header {
-  margin-bottom: 20px;
-}
-
-.catalogue-header h1 {
-  margin: 0;
-  font-family: var(--pm-font-body);
-  font-weight: 700;
-  font-size: 22px;
-  letter-spacing: -0.02em;
-}
-
 .item-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(215px, 1fr));
