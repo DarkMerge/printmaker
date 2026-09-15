@@ -19,7 +19,7 @@
 
 .catalogue-header h1 {
   margin: 0;
-  font-family: var(--pm-font-display);
+  font-family: var(--pm-font-body);
   font-weight: 700;
   font-size: 22px;
   letter-spacing: -0.02em;

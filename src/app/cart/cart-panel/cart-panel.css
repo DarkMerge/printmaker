@@ -16,7 +16,7 @@
 
 .cart-header h2 {
   margin: 0;
-  font-family: var(--pm-font-display);
+  font-family: var(--pm-font-body);
   font-size: 20px;
   font-weight: 700;
   letter-spacing: -0.02em;
@@ -124,7 +124,7 @@
 .grand-total {
   align-items: baseline;
   margin-top: 4px;
-  font-family: var(--pm-font-display);
+  font-family: var(--pm-font-body);
   font-size: 18px;
   font-weight: 700;
   color: var(--pm-bg);

@@ -5,8 +5,8 @@
   --pm-peach: #ffd6c9;
   --pm-indigo: #42426f;
   --pm-violet: #6d5ba6;
-  --pm-font-display: 'Syne', sans-serif;
-  --pm-font-body: 'DM Sans', system-ui, sans-serif;
+  --pm-font-logo: 'Syne', sans-serif;
+  --pm-font-body: 'PT Sans Narrow', system-ui, sans-serif;
 }
 
 body {

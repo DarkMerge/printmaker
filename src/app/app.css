@@ -25,7 +25,7 @@
 }
 
 .brand-name {
-  font-family: var(--pm-font-display);
+  font-family: var(--pm-font-logo);
   font-weight: 800;
   font-size: 30px;
   letter-spacing: -0.035em;

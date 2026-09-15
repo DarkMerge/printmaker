@@ -32,7 +32,7 @@
 
 .title-row h2 {
   margin: 0;
-  font-family: var(--pm-font-display);
+  font-family: var(--pm-font-body);
   font-size: 16px;
   font-weight: 700;
 }
