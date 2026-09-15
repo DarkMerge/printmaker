@@ -42,3 +42,7 @@ __screenshots__/
 # System files
 .DS_Store
 Thumbs.db
+
+# Real secrets — generated at CI build time from GitHub Actions secrets,
+# or created locally for dev. See telegram.config.example.ts.
+/src/app/core/telegram.config.ts

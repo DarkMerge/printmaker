@@ -3,6 +3,7 @@ import { CurrencyPipe, NgOptimizedImage } from '@angular/common';
 import { CartService } from '../cart.service';
 import { OrdersService } from '../../orders/orders.service';
 import { CheckoutSuccessService } from '../../orders/checkout-success.service';
+import { OrderNotificationsService } from '../../orders/order-notifications.service';
 
 @Component({
   selector: 'app-cart-panel',
@@ -14,6 +15,7 @@ export class CartPanel {
   protected readonly cart = inject(CartService);
   private readonly orders = inject(OrdersService);
   private readonly checkoutSuccess = inject(CheckoutSuccessService);
+  private readonly notifications = inject(OrderNotificationsService);
 
   protected readonly submitting = signal(false);
 
@@ -28,22 +30,22 @@ export class CartPanel {
       const lines = this.cart.lines();
       const total = this.cart.subtotal();
       const count = this.cart.totalQuantity();
+      const orderLines = lines.map((line) => ({
+        itemId: line.item.id,
+        name: line.item.name,
+        imageUrl: line.item.imageUrl,
+        quantity: line.quantity,
+      }));
+      const orderNumber = `PM-${Math.floor(1000 + Math.random() * 8999)}`;
 
-      await this.orders.createOrder({
-        phone: null,
-        lines: lines.map((line) => ({
-          itemId: line.item.id,
-          name: line.item.name,
-          imageUrl: line.item.imageUrl,
-          quantity: line.quantity,
-        })),
-      });
+      await this.orders.createOrder({ phone: null, lines: orderLines });
 
       this.cart.clear();
       this.checkoutSuccess.show({
-        orderNumber: `PM-${Math.floor(1000 + Math.random() * 8999)}`,
+        orderNumber,
         summary: `${count} ${partsWord(count)} у черзі на друк · ${formatMoney(total)}`,
       });
+      void this.notifications.notifyNewOrder(orderNumber, orderLines, total);
     } finally {
       this.submitting.set(false);
     }

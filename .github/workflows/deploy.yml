@@ -24,6 +24,17 @@ jobs:
           node-version: 24
           cache: npm
       - run: npm ci
+      - name: Generate Telegram config
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: |
+          cat > src/app/core/telegram.config.ts <<EOF
+          export const telegramConfig = {
+            botToken: '${TELEGRAM_BOT_TOKEN}',
+            chatId: '${TELEGRAM_CHAT_ID}',
+          };
+          EOF
       - run: npx ng build --configuration production --base-href /printmaker/
       - uses: actions/upload-pages-artifact@v3
         with:
