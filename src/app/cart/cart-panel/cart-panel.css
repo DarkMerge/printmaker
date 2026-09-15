@@ -42,8 +42,14 @@
 
 .line {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   gap: 12px;
+}
+
+.line-thumb {
+  flex: 0 0 auto;
+  border-radius: 8px;
+  background: var(--pm-peach);
 }
 
 .line-info {

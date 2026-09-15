@@ -1,5 +1,5 @@
 import { Component, computed, inject, signal } from '@angular/core';
-import { CurrencyPipe } from '@angular/common';
+import { CurrencyPipe, NgOptimizedImage } from '@angular/common';
 import { FormField, form, required, submit } from '@angular/forms/signals';
 import { CartService } from '../cart.service';
 import { OrdersService } from '../../orders/orders.service';
@@ -7,7 +7,7 @@ import { OrderSuccess } from '../../orders/order-success/order-success';
 
 @Component({
   selector: 'app-cart-panel',
-  imports: [FormField, CurrencyPipe, OrderSuccess],
+  imports: [FormField, CurrencyPipe, NgOptimizedImage, OrderSuccess],
   templateUrl: './cart-panel.html',
   styleUrl: './cart-panel.css',
 })
@@ -34,7 +34,7 @@ export class CartPanel {
     this.submitting.set(true);
     try {
       const lines = this.cart.lines();
-      const total = this.cart.total();
+      const total = this.cart.subtotal();
       const count = this.cart.totalQuantity();
 
       const ok = await submit(this.checkoutForm, async (field) => {

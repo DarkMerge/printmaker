@@ -40,7 +40,7 @@ const items = Array.from({ length: 11 }, (_, i) => {
   const n = i + 1;
   return {
     id: `item-${n}`,
-    name: `Item ${n}`,
+    name: `Хуйня ${n}`,
     description: '',
     imageUrl: `items/item-${n}.jpg`,
     price: PLACEHOLDER_PRICES[n],

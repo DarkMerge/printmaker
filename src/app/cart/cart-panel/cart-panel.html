@@ -11,6 +11,7 @@
     <div class="lines">
       @for (line of cart.lines(); track line.item.id) {
         <div class="line">
+          <img [ngSrc]="line.item.imageUrl" width="44" height="44" style="object-fit: contain" [alt]="line.item.name" class="line-thumb" />
           <div class="line-info">
             <div class="line-name">{{ line.item.name }}</div>
             <div class="line-unit">{{ line.item.price | currency }} за од.</div>
@@ -44,11 +45,10 @@
         <span>Сума</span><span>{{ cart.subtotal() | currency }}</span>
       </div>
       <div class="totals-row">
-        <span>Доставка</span>
-        <span>{{ cart.shipping() === 0 ? (cart.subtotal() >= 50 ? 'Безкоштовно' : '—') : (cart.shipping() | currency) }}</span>
+        <span>Доставка</span><span>Безкоштовно</span>
       </div>
       <div class="totals-row grand-total">
-        <span>Разом</span><span>{{ cart.total() | currency }}</span>
+        <span>Разом</span><span>{{ cart.subtotal() | currency }}</span>
       </div>
     </div>
 
@@ -65,7 +65,7 @@
     </form>
   }
 
-  <div class="footnote">Друк розпочнеться протягом 24 год. Самовивіз або доставка з відстеженням.</div>
+  <div class="footnote">Друк розпочнеться протягом 24 год. Доставка з відстеженням буде доступна у додатку НП</div>
 </div>
 
 <app-order-success

@@ -15,13 +15,6 @@ export class CartService {
     this.lines().reduce((sum, line) => sum + line.item.price * line.quantity, 0),
   );
 
-  readonly shipping = computed(() => {
-    const subtotal = this.subtotal();
-    return subtotal === 0 || subtotal >= 50 ? 0 : 4.5;
-  });
-
-  readonly total = computed(() => this.subtotal() + this.shipping());
-
   add(item: Item, quantity = 1) {
     this.linesSignal.update((lines) => {
       const existing = lines.find((line) => line.item.id === item.id);
