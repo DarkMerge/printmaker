@@ -52,17 +52,9 @@
       </div>
     </div>
 
-    <form class="checkout-form" (submit)="$event.preventDefault(); placeOrder()">
-      <label for="customerName">Ваше ім'я</label>
-      <input id="customerName" type="text" [formField]="checkoutForm.customerName" />
-      @if (checkoutForm.customerName().touched() && checkoutForm.customerName().invalid()) {
-        <p class="error" role="alert">Вкажіть ім'я</p>
-      }
-
-      <button type="submit" class="place-order" [disabled]="submitting()">
-        {{ submitting() ? 'Оформлення…' : 'Оформити замовлення' }}
-      </button>
-    </form>
+    <button type="button" class="place-order" [disabled]="submitting()" (click)="placeOrder()">
+      {{ submitting() ? 'Оформлення…' : 'Оформити замовлення' }}
+    </button>
   }
 
   <div class="footnote">Друк розпочнеться протягом 24 год. Доставка з відстеженням буде доступна у додатку НП</div>

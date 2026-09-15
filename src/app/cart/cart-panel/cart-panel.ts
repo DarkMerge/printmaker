@@ -1,24 +1,18 @@
 import { Component, computed, inject, signal } from '@angular/core';
 import { CurrencyPipe, NgOptimizedImage } from '@angular/common';
-import { FormField, form, required, submit } from '@angular/forms/signals';
 import { CartService } from '../cart.service';
 import { OrdersService } from '../../orders/orders.service';
 import { OrderSuccess } from '../../orders/order-success/order-success';
 
 @Component({
   selector: 'app-cart-panel',
-  imports: [FormField, CurrencyPipe, NgOptimizedImage, OrderSuccess],
+  imports: [CurrencyPipe, NgOptimizedImage, OrderSuccess],
   templateUrl: './cart-panel.html',
   styleUrl: './cart-panel.css',
 })
 export class CartPanel {
   protected readonly cart = inject(CartService);
   private readonly orders = inject(OrdersService);
-
-  private readonly checkoutModel = signal({ customerName: '' });
-  protected readonly checkoutForm = form(this.checkoutModel, (path) => {
-    required(path.customerName, { message: "Вкажіть ім'я" });
-  });
 
   protected readonly submitting = signal(false);
   protected readonly successVisible = signal(false);
@@ -37,29 +31,20 @@ export class CartPanel {
       const total = this.cart.subtotal();
       const count = this.cart.totalQuantity();
 
-      const ok = await submit(this.checkoutForm, async (field) => {
-        await this.orders.createOrder({
-          customerName: field().value().customerName,
-          phone: null,
-          lines: lines.map((line) => ({
-            itemId: line.item.id,
-            name: line.item.name,
-            imageUrl: line.item.imageUrl,
-            quantity: line.quantity,
-          })),
-        });
-        return undefined;
+      await this.orders.createOrder({
+        phone: null,
+        lines: lines.map((line) => ({
+          itemId: line.item.id,
+          name: line.item.name,
+          imageUrl: line.item.imageUrl,
+          quantity: line.quantity,
+        })),
       });
 
-      if (ok) {
-        this.cart.clear();
-        this.checkoutModel.set({ customerName: '' });
-        this.successOrderNumber.set(`PM-${Math.floor(1000 + Math.random() * 8999)}`);
-        this.successSummary.set(
-          `${count} ${partsWord(count)} у черзі на друк · ${formatMoney(total)}`,
-        );
-        this.successVisible.set(true);
-      }
+      this.cart.clear();
+      this.successOrderNumber.set(`PM-${Math.floor(1000 + Math.random() * 8999)}`);
+      this.successSummary.set(`${count} ${partsWord(count)} у черзі на друк · ${formatMoney(total)}`);
+      this.successVisible.set(true);
     } finally {
       this.submitting.set(false);
     }
