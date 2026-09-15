@@ -9,12 +9,14 @@
   --pm-font-body: 'PT Sans Narrow', system-ui, sans-serif;
 }
 
+html,
 body {
   margin: 0;
   background: var(--pm-bg);
   color: var(--pm-ink);
   font-family: var(--pm-font-body);
   -webkit-font-smoothing: antialiased;
+  overscroll-behavior-y: none;
 }
 
 @keyframes pm-scrim-in {
